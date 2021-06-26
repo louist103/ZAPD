@@ -7,7 +7,7 @@ COPYCHECK_ARGS ?=
 
 CXX := g++
 INC := -I ZAPD -I lib/assimp/include -I lib/elfio -I lib/json/include -I lib/stb -I lib/tinygltf -I lib/libgfxd -I lib/tinyxml2
-CXXFLAGS += -fpic -std=c++17 -Wall -fno-omit-frame-pointer
+CXXFLAGS += -fpic -std=c++17 -Wall -fno-omit-frame-pointer -Wall
 
 ifneq ($(DEBUG),0)
   OPTIMIZATION_ON = 0
@@ -20,7 +20,7 @@ endif
 ifeq ($(OPTIMIZATION_ON),0)
   CXXFLAGS += -O0
 else
-CXXFLAGS += -O2
+CXXFLAGS += -O2 -mtune=native -march=native
 endif
 
 ifneq ($(ASAN),0)

@@ -19,8 +19,6 @@ REGISTER_ZFILENODE(DList, ZDisplayList);
 
 ZDisplayList::ZDisplayList(ZFile* nParent) : ZResource(nParent)
 {
-	defines = "";
-	sceneSegName = "";
 	lastTexWidth = 0;
 	lastTexHeight = 0;
 	lastTexAddr = 0;
@@ -29,7 +27,6 @@ ZDisplayList::ZDisplayList(ZFile* nParent) : ZResource(nParent)
 	lastTexSizTest = F3DZEXTexSizes::G_IM_SIZ_16b;
 	lastTexLoaded = false;
 	lastTexIsPalette = false;
-	name = "";
 	scene = nullptr;
 	dListType = Globals::Instance->game == ZGame::OOT_SW97 ? DListType::F3DEX : DListType::F3DZEX;
 }
@@ -498,7 +495,7 @@ int32_t ZDisplayList::OptimizationCheck_LoadTextureBlock(int32_t startIndex, std
 
 		uint32_t texAddr, tmem, rtile, fmt, siz, sizB, width, height, width2, height2, pal, cms,
 			cmt, masks, maskt, shifts, shiftt;
-		std::string texStr = "";
+		std::string texStr;
 
 		// gsDPSetTextureImage
 		{
@@ -708,16 +705,8 @@ void ZDisplayList::Opcode_G_DL(uint64_t data, std::string prefix, char* line)
 			GETSEGOFFSET(data), GetDListLength(parent->GetRawData(), GETSEGOFFSET(data), dListType),
 			parent);
 
-		// if (scene != nullptr)
-		{
-			nList->scene = scene;
-			otherDLists.push_back(nList);
-		}
-		// else
-		//{
-		// nList->SetName(StringHelper::Sprintf("%sDlist0x%06lX", prefix.c_str(),
-		// SEG2FILESPACE(data))); nList->GetSourceOutputCode(prefix);
-		//}
+		nList->scene = scene;
+		otherDLists.push_back(nList);
 	}
 }
 
@@ -780,7 +769,7 @@ void ZDisplayList::Opcode_G_MTX(uint64_t data, char* line)
 	else
 		pp = (data & 0x000000FF00000000) >> 32;
 
-	std::string matrixRef = "";
+	std::string matrixRef;
 
 	if (Globals::Instance->symbolMap.find(mm) != Globals::Instance->symbolMap.end())
 		matrixRef = StringHelper::Sprintf("&%s", Globals::Instance->symbolMap[mm].c_str());
@@ -1592,7 +1581,7 @@ static int32_t GfxdCallback_Vtx(uint32_t seg, int32_t count)
 {
 	ZDisplayList* self = static_cast<ZDisplayList*>(gfxd_udata_get());
 	uint32_t vtxOffset = Seg2Filespace(seg, self->parent->baseAddress);
-	std::string vtxName = "";
+	std::string vtxName;
 
 	// Probably an external asset we are unable to track
 	if (!Globals::Instance->HasSegment(GETSEGNUM(seg)))
@@ -1673,7 +1662,7 @@ static int32_t GfxdCallback_Texture(segptr_t seg, int32_t fmt, int32_t siz, int3
 
 	self->TextureGenCheck(self->curPrefix);
 
-	std::string texName = "";
+	std::string texName;
 
 	ZFile* auxParent = self->parent;
 	if (self->parent->segment != texSegNum && Globals::Instance->HasSegment(texSegNum))
@@ -1709,7 +1698,7 @@ static int32_t GfxdCallback_Palette(uint32_t seg, int32_t idx, int32_t count)
 
 	self->TextureGenCheck(self->curPrefix);
 
-	std::string palName = "";
+	std::string palName;
 
 	ZFile* auxParent = self->parent;
 	if (self->parent->segment != palSegNum && Globals::Instance->HasSegment(palSegNum))
@@ -1758,7 +1747,7 @@ static int32_t GfxdCallback_DisplayList(uint32_t seg)
 
 static int32_t GfxdCallback_Matrix(uint32_t seg)
 {
-	std::string mtxName = "";
+	std::string mtxName;
 	ZDisplayList* self = static_cast<ZDisplayList*>(gfxd_udata_get());
 
 	if (Globals::Instance->symbolMap.find(seg) != Globals::Instance->symbolMap.end())
@@ -1790,7 +1779,7 @@ static int32_t GfxdCallback_Matrix(uint32_t seg)
 
 std::string ZDisplayList::GetSourceOutputCode(const std::string& prefix)
 {
-	std::string sourceOutput = "";
+	std::string sourceOutput;
 
 	if (Globals::Instance->useLegacyZDList)
 		sourceOutput += ProcessLegacy(prefix);
@@ -1829,7 +1818,7 @@ std::string ZDisplayList::GetSourceOutputCode(const std::string& prefix)
 		// Generate Vertex Declarations
 		for (auto& item : vertices)
 		{
-			std::string declaration = "";
+			std::string declaration;
 
 			uint32_t curAddr = item.first;
 
@@ -1908,7 +1897,7 @@ std::string ZDisplayList::GetSourceOutputCode(const std::string& prefix)
 		{
 			auto& item = vertices[vtxKeys[i]];
 
-			std::string declaration = "";
+			std::string declaration;
 
 			int32_t curAddr = vtxKeys[i];
 
@@ -1959,7 +1948,7 @@ std::string ZDisplayList::GetSourceOutputCode(const std::string& prefix)
 std::string ZDisplayList::ProcessLegacy(const std::string& prefix)
 {
 	char line[4096];
-	std::string sourceOutput = "";
+	std::string sourceOutput;
 
 	for (size_t i = 0; i < instructions.size(); i++)
 	{
@@ -2001,7 +1990,7 @@ std::string ZDisplayList::ProcessLegacy(const std::string& prefix)
 
 std::string ZDisplayList::ProcessGfxDis(const std::string& prefix)
 {
-	std::string sourceOutput = "";
+	std::string sourceOutput;
 
 	OutputFormatter outputformatter;
 	int32_t dListSize = instructions.size() * sizeof(instructions[0]);
@@ -2109,7 +2098,7 @@ bool ZDisplayList::TextureGenCheck(ZRoom* scene, ZFile* parent, std::string pref
 					self->lastTlut = tex;
 
 				auto filepath = Globals::Instance->outputPath /
-								Path::GetFileNameWithoutExtension(tex->GetName());
+				                Path::GetFileNameWithoutExtension(tex->GetName());
 				auto filename = StringHelper::Sprintf("%s.%s.inc.c", filepath.c_str(),
 				                                      tex->GetExternalExtension().c_str());
 				scene->parent->AddDeclarationIncludeArray(texAddr, filename, tex->GetRawDataSize(),

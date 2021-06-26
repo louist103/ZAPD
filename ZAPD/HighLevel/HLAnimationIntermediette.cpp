@@ -69,7 +69,7 @@ ZAnimation* HLAnimationIntermediette::ToZAnimation()
 
 std::string HLAnimationIntermediette::OutputXML()
 {
-	std::string output = "";
+	std::string output;
 	XMLDocument doc;
 
 	XMLElement* root = doc.NewElement("HLAnimationIntermediette");

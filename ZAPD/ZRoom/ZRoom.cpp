@@ -330,7 +330,7 @@ void ZRoom::ProcessCommandSets()
 
 		if (!setCommands.empty())
 		{
-			std::string declaration = "";
+			std::string declaration;
 
 			for (size_t i = 0; i < setCommands.size(); i++)
 			{

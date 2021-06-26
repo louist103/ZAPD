@@ -8,7 +8,6 @@ using namespace ELFIO;
 
 ZOverlay::ZOverlay()
 {
-	name = "";
 	entries = std::vector<RelocationEntry*>();
 }
 
@@ -191,7 +190,7 @@ ZOverlay* ZOverlay::FromBuild(std::string buildPath, std::string cfgFolderPath)
 
 std::string ZOverlay::GetSourceOutputCode(const std::string& prefix)
 {
-	std::string output = "";
+	std::string output;
 
 	output += ".section .ovl\n";
 

@@ -272,7 +272,7 @@ void HLModelIntermediette::ProcessZSkeletonLimb(HLModelIntermediette* model, ZSk
 
 std::string HLModelIntermediette::ToOBJFile()
 {
-	std::string output = "";
+	std::string output;
 
 	for (HLIntermediette* block : blocks)
 	{
@@ -338,7 +338,7 @@ std::string HLModelIntermediette::ToAssimpFile()
 
 std::string HLModelIntermediette::OutputCode()
 {
-	std::string output = "";
+	std::string output;
 
 	for (HLIntermediette* block : blocks)
 	{
@@ -355,7 +355,7 @@ std::string HLModelIntermediette::OutputCode()
 
 std::string HLModelIntermediette::OutputXML()
 {
-	std::string output = "";
+	std::string output;
 	XMLDocument doc;
 
 	XMLElement* root = doc.NewElement("HLModelIntermediette");
@@ -481,7 +481,7 @@ void HLVerticesIntermediette::InitFromVertices(std::vector<ZVtx> dispListVertice
 
 std::string HLVerticesIntermediette::OutputCode(HLModelIntermediette* parent)
 {
-	std::string output = "";
+	std::string output;
 
 	output += StringHelper::Sprintf("Vtx %s_verts[] = \n{\n", name.c_str());
 
@@ -498,7 +498,7 @@ std::string HLVerticesIntermediette::OutputCode(HLModelIntermediette* parent)
 
 std::string HLVerticesIntermediette::OutputOBJ()
 {
-	std::string output = "";
+	std::string output;
 
 	for (auto& v : vertices)
 	{
@@ -559,7 +559,7 @@ void HLMeshCmdGeoSettings::InitFromXML(tinyxml2::XMLElement* xmlElement)
 
 std::string HLMeshCmdGeoSettings::OutputCode(HLModelIntermediette* parent)
 {
-	std::string output = "";
+	std::string output;
 
 	if (off != "")
 		output +=
@@ -669,7 +669,7 @@ std::string HLMeshCmdTriangle2::OutputCode(HLModelIntermediette* parent)
 
 std::string HLMeshCmdTriangle2::OutputOBJ(HLModelIntermediette* parent)
 {
-	std::string output = "";
+	std::string output;
 
 	int32_t startIndex = parent->startIndex;
 
@@ -970,7 +970,7 @@ void HLMeshIntermediette::InitFromXML(tinyxml2::XMLElement* xmlElement)
 
 std::string HLMeshIntermediette::OutputCode(std::string materialName)
 {
-	std::string output = "";
+	std::string output;
 
 	HLMaterialIntermediette* mat = parent->FindByName<HLMaterialIntermediette>(materialName);
 	HLTextureIntermediette* tex = parent->FindByName<HLTextureIntermediette>(mat->textureName);
@@ -994,7 +994,7 @@ std::string HLMeshIntermediette::OutputCode(std::string materialName)
 
 std::string HLMeshIntermediette::OutputOBJ()
 {
-	std::string output = "";
+	std::string output;
 
 	output += StringHelper::Sprintf("o %s\n", name.c_str());
 
@@ -1068,7 +1068,7 @@ void HLLimbIntermediette::InitFromXML(tinyxml2::XMLElement* xmlElement)
 
 std::string HLLimbIntermediette::OutputCode()
 {
-	std::string output = "";
+	std::string output;
 
 	output += StringHelper::Sprintf("Gfx %s[] = \n{\n", name.c_str());
 
@@ -1123,7 +1123,7 @@ void HLLimbCommand::OutputXML(tinyxml2::XMLElement* parent)
 
 std::string HLLimbCommand::OutputCode(HLModelIntermediette* parent)
 {
-	std::string output = "";
+	std::string output;
 
 	// Time to generate the display list...
 	HLMeshIntermediette* mesh = parent->FindByName<HLMeshIntermediette>(meshName);

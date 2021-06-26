@@ -261,7 +261,7 @@ void ZLimbTable::DeclareReferences(const std::string& prefix)
 
 std::string ZLimbTable::GetBodySourceCode() const
 {
-	std::string body = "";
+	std::string body;
 
 	for (size_t i = 0; i < count; i++)
 	{
@@ -301,7 +301,8 @@ std::string ZLimbTable::GetSourceTypeName() const
 	case ZLimbType::Curve:
 	case ZLimbType::Legacy:
 		return StringHelper::Sprintf("%s*", ZLimb::GetSourceTypeName(limbType));
-		;
+	default:
+		throw std::runtime_error("Invalid Limb type");
 	}
 }
 

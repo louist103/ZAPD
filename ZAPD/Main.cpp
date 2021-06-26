@@ -405,7 +405,7 @@ void BuildAssetAnimationIntermediette(const fs::path& animPath, const fs::path& 
 	zAnim->parent = file;
 
 	zAnim->GetSourceOutputCode(split[split.size() - 2]);
-	std::string output = "";
+	std::string output;
 
 	output += file->declarations[2]->text + "\n";
 	output += file->declarations[1]->text + "\n";

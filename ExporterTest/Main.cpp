@@ -18,12 +18,11 @@ static void ExporterParseFileMode(std::string buildMode, ZFileMode& fileMode)
 		fileMode = ExporterFileMode::ModeExample2;
 	else if (buildMode == "me3")
 		fileMode = ExporterFileMode::ModeExample3;
-}
-
-static void ExporterParseArgs(int argc, char* argv[], int& i)
-{
-	std::string arg = argv[i];
-
+		fileMode = (ZFileMode)ExporterFileMode::ModeExample1;
+	else if (buildMode == "me2")
+		fileMode = (ZFileMode)ExporterFileMode::ModeExample2;
+	else if (buildMode == "me3")
+		fileMode = (ZFileMode)ExporterFileMode::ModeExample3;
 	if (arg == "--do-x")
 	{
 

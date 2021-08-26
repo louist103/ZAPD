@@ -128,7 +128,6 @@ std::string BinaryReader::ReadString()
 {
 	std::string res = "";
 	char c;
-
 	do
 	{
 		c = ReadChar();

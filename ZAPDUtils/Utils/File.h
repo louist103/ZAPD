@@ -20,7 +20,7 @@ public:
 	static std::vector<uint8_t> ReadAllBytes(const fs::path& filePath)
 	{
 		std::ifstream file(filePath, std::ios::in | std::ios::binary | std::ios::ate);
-		size_t fileSize = static_cast<size_t>(file.tellg());
+		int32_t fileSize = (int32_t)file.tellg();
 		file.seekg(0);
 		char* data = new char[fileSize];
 		file.read(data, fileSize);
@@ -28,21 +28,21 @@ public:
 		delete[] data;
 
 		return result;
-	}
+	};
 
 	static std::string ReadAllText(const fs::path& filePath)
 	{
 		std::ifstream file(filePath, std::ios::in | std::ios::binary | std::ios::ate);
-		size_t fileSize = static_cast<size_t>(file.tellg());
+		int32_t fileSize = (int32_t)file.tellg();
 		file.seekg(0);
 		char* data = new char[fileSize + 1];
 		memset(data, 0, fileSize + 1);
 		file.read(data, fileSize);
-		std::string str = data;
+		std::string str = std::string((const char*)data);
 		delete[] data;
 
 		return str;
-	}
+	};
 
 	static std::vector<std::string> ReadAllLines(const fs::path& filePath)
 	{
@@ -50,25 +50,25 @@ public:
 		std::vector<std::string> lines = StringHelper::Split(text, "\n");
 
 		return lines;
-	}
+	};
 
 	static void WriteAllBytes(const fs::path& filePath, const std::vector<uint8_t>& data)
 	{
 		std::ofstream file(filePath, std::ios::binary);
-		file.write(reinterpret_cast<const char*>(data.data()), data.size());
-	}
+		file.write((char*)data.data(), data.size());
+	};
 
 	static void WriteAllBytes(const std::string& filePath, const std::vector<char>& data)
 	{
 		std::ofstream file(filePath, std::ios::binary);
-		file.write(data.data(), data.size());
-	}
+		file.write((char*)data.data(), data.size());
+	};
 
 	static void WriteAllBytes(const std::string& filePath, const char* data, int dataSize)
 	{
 		std::ofstream file(filePath, std::ios::binary);
-		file.write(data, dataSize);
-	}
+		file.write((char*)data, dataSize);
+	};
 
 	static void WriteAllText(const fs::path& filePath, const std::string& text)
 	{

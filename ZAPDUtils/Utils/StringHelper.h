@@ -104,7 +104,7 @@ public:
 
 	static int64_t StrToL(const std::string& str, int32_t base = 10)
 	{
-		return std::strtoll(str.c_str(), nullptr, base);
+		return std::strtoull(str.c_str(), nullptr, base);
 	}
 
 	static std::string BoolStr(bool b) { return b ? "true" : "false"; }

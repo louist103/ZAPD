@@ -30,7 +30,7 @@ void BinaryReader::Read(char* buffer, int32_t length)
 
 char BinaryReader::ReadChar()
 {
-	return static_cast<char>(stream->ReadByte());
+	return (char)stream->ReadByte();
 }
 
 int8_t BinaryReader::ReadByte()
@@ -40,7 +40,7 @@ int8_t BinaryReader::ReadByte()
 
 uint8_t BinaryReader::ReadUByte()
 {
-	return static_cast<uint8_t>(stream->ReadByte());
+	return (uint8_t)stream->ReadByte();
 }
 
 int16_t BinaryReader::ReadInt16()
@@ -128,6 +128,7 @@ std::string BinaryReader::ReadString()
 {
 	std::string res = "";
 	char c;
+		
 	do
 	{
 		c = ReadChar();
@@ -135,6 +136,7 @@ std::string BinaryReader::ReadString()
 		if (c != 0)
 			res += c;
 	} while (c != 0);
+
 
 	return res;
 }

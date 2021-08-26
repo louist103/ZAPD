@@ -19,18 +19,18 @@ public:
 	{
 		std::vector<std::string> split = StringHelper::Split(input, "/");
 		return split[split.size() - 1];
-	}
+	};
 
 	static std::string GetFileNameWithoutExtension(const std::string& input)
 	{
 		std::vector<std::string> split = StringHelper::Split(input, "/");
 		return split[split.size() - 1].substr(0, split[split.size() - 1].find_last_of("."));
-	}
+	};
 
 	static std::string GetFileNameExtension(const std::string& input)
 	{
 		return input.substr(input.find_last_of("."), input.length());
-	}
+	};
 
 	static std::string GetPath(const std::string& input)
 	{
@@ -44,10 +44,10 @@ public:
 		}
 
 		return output;
-	}
+	};
 
 	static std::string GetDirectoryName(const fs::path& path)
 	{
 		return path.parent_path().u8string();
-	}
+	};
 };

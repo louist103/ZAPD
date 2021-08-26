@@ -18,7 +18,7 @@ struct RotationIndex
 		x = nX;
 		y = nY;
 		z = nZ;
-	};
+	}
 };
 
 class ZAnimation : public ZResource
@@ -33,7 +33,6 @@ public:
 
 protected:
 	void ParseRawData() override;
-	void Save(const fs::path& outFolder) override;
 };
 
 class ZNormalAnimation : public ZAnimation

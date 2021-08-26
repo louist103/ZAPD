@@ -5,7 +5,7 @@
 #include <png.h>
 #include <stdexcept>
 
-#include "StringHelper.h"
+#include "Utils/StringHelper.h"
 
 /* ImageBackend */
 
@@ -100,10 +100,10 @@ void ImageBackend::ReadPng(const char* filename)
 	png_read_update_info(png, info);
 
 	size_t rowBytes = png_get_rowbytes(png, info);
-	pixelMatrix = (uint8_t**)malloc(sizeof(uint8_t*) * height);
+	pixelMatrix = static_cast<uint8_t**>(malloc(sizeof(uint8_t*) * height));
 	for (size_t y = 0; y < height; y++)
 	{
-		pixelMatrix[y] = (uint8_t*)malloc(rowBytes);
+		pixelMatrix[y] = static_cast<uint8_t*>(malloc(rowBytes));
 	}
 
 	png_read_image(png, pixelMatrix);
@@ -173,7 +173,7 @@ void ImageBackend::WritePng(const char* filename)
 
 #ifdef TEXTURE_DEBUG
 		printf("palette\n");
-		png_color* aux = (png_color*)colorPalette;
+		png_color* aux = static_cast<png_color*>(colorPalette);
 		for (size_t y = 0; y < paletteSize; y++)
 		{
 			printf("#%02X%02X%02X ", aux[y].red, aux[y].green, aux[y].blue);
@@ -216,7 +216,8 @@ void ImageBackend::WritePng(const char* filename)
 
 void ImageBackend::WritePng(const fs::path& filename)
 {
-	WritePng(filename.c_str());
+	// Note: The .string() is necessary for MSVC, due to the implementation of std::filesystem differing from GCC. Do not remove!
+	WritePng(filename.string().c_str());
 }
 
 void ImageBackend::SetTextureData(const std::vector<std::vector<RGBAPixel>>& texData,
@@ -282,7 +283,7 @@ void ImageBackend::InitEmptyPaletteImage(uint32_t nWidth, uint32_t nHeight)
 
 	size_t bytePerPixel = GetBytesPerPixel();
 
-	pixelMatrix = (uint8_t**)malloc(sizeof(uint8_t*) * height);
+	pixelMatrix = static_cast<uint8_t**>(malloc(sizeof(uint8_t*) * height));
 	for (size_t y = 0; y < height; y++)
 	{
 		pixelMatrix[y] = static_cast<uint8_t*>(calloc(width * bytePerPixel, sizeof(uint8_t*)));

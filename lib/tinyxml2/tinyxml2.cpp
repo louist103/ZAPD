@@ -20,7 +20,8 @@ must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source
 distribution.
 */
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
 #include "tinyxml2.h"
 
 #include <new>		// yes, this one new style header, is in the Android SDK.
@@ -2835,3 +2836,4 @@ bool XMLPrinter::Visit( const XMLUnknown& unknown )
 }
 
 }   // namespace tinyxml2
+#pragma clang diagnostic pop

@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+
 #ifndef ELFIO_DUMP_HPP
 #define ELFIO_DUMP_HPP
 
@@ -974,3 +977,4 @@ class dump
 }; // namespace ELFIO
 
 #endif // ELFIO_DUMP_HPP
+#pragma clang diagnostic pop

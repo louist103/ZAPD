@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+
 #ifndef ELFIO_DYNAMIC_HPP
 #define ELFIO_DYNAMIC_HPP
 
@@ -255,3 +258,4 @@ using const_dynamic_section_accessor = dynamic_section_accessor_template<const s
 } // namespace ELFIO
 
 #endif // ELFIO_DYNAMIC_HPP
+#pragma clang diagnostic pop

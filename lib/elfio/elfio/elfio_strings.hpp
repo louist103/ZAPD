@@ -19,6 +19,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
 
 #ifndef ELFIO_STRINGS_HPP
 #define ELFIO_STRINGS_HPP
@@ -98,3 +100,4 @@ using const_string_section_accessor = string_section_accessor_template<const sec
 } // namespace ELFIO
 
 #endif // ELFIO_STRINGS_HPP
+#pragma clang diagnostic pop

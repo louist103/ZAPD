@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+
 #ifndef ELFIO_SYMBOLS_HPP
 #define ELFIO_SYMBOLS_HPP
 
@@ -280,3 +283,4 @@ using const_symbol_section_accessor = symbol_section_accessor_template<const sec
 } // namespace ELFIO
 
 #endif // ELFIO_SYMBOLS_HPP
+#pragma clang diagnostic pop

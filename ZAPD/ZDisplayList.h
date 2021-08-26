@@ -65,7 +65,7 @@ enum class F3DEXOpcode
 	G_SETCIMG = 0xFF
 };
 
-enum class F3DZEXOpcode
+enum class F3DZEXOpcode : uint8_t
 {
 	G_NOOP = 0x00,
 	G_VTX = 0x01,
@@ -372,7 +372,6 @@ public:
 	std::string ProcessLegacy(const std::string& prefix);
 	std::string ProcessGfxDis(const std::string& prefix);
 
-	virtual void GenerateHLIntermediette(HLFileIntermediette& hlFile) override;
 	bool IsExternalResource() const override;
 	virtual std::string GetExternalExtension() const override;
 	std::string GetSourceTypeName() const override;

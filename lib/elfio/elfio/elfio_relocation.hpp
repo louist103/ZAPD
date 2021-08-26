@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+
 #ifndef ELFIO_RELOCATION_HPP
 #define ELFIO_RELOCATION_HPP
 
@@ -371,3 +374,4 @@ using const_relocation_section_accessor = relocation_section_accessor_template<c
 } // namespace ELFIO
 
 #endif // ELFIO_RELOCATION_HPP
+#pragma clang diagnostic pop

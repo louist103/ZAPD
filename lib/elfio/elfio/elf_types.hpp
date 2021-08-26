@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+
 #ifndef ELFTYPES_H
 #define ELFTYPES_H
 
@@ -849,3 +852,4 @@ struct Elf64_Dyn {
 } // namespace ELFIO
 
 #endif // ELFTYPES_H
+#pragma clang diagnostic 

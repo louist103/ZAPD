@@ -1,8 +1,8 @@
 #include "SetActorList.h"
 
-#include "BitConverter.h"
+#include "Utils/BitConverter.h"
 #include "Globals.h"
-#include "StringHelper.h"
+#include "Utils/StringHelper.h"
 #include "ZFile.h"
 #include "ZRoom/ZNames.h"
 #include "ZRoom/ZRoom.h"
@@ -68,7 +68,7 @@ std::string SetActorList::GetBodySourceCode() const
 
 size_t SetActorList::GetRawDataSize() const
 {
-	return ZRoomCommand::GetRawDataSize() + ((int32_t)actors.size() * 16);
+	return ZRoomCommand::GetRawDataSize() + (actors.size() * 16);
 }
 
 size_t SetActorList::GetActorListArraySize() const

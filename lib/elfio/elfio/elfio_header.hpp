@@ -20,6 +20,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+
 #ifndef ELF_HEADER_HPP
 #define ELF_HEADER_HPP
 
@@ -143,3 +146,4 @@ template< class T > class elf_header_impl : public elf_header
 } // namespace ELFIO
 
 #endif // ELF_HEADER_HPP
+#pragma clang diagnostic pop

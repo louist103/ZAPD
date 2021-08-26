@@ -19,7 +19,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
 #ifndef ELFIO_SEGMENT_HPP
 #define ELFIO_SEGMENT_HPP
 
@@ -244,3 +245,4 @@ class segment_impl : public segment
 } // namespace ELFIO
 
 #endif // ELFIO_SEGMENT_HPP
+#pragma clang diagnostic pop

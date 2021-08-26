@@ -7,7 +7,7 @@ COPYCHECK_ARGS ?=
 
 CXX := clang++
 INC := -I ZAPD -I lib/assimp/include -I lib/elfio -I lib/json/include -I lib/stb -I lib/tinygltf -I lib/libgfxd -I lib/tinyxml2 -I ZAPDUtils
-CXXFLAGS += -fpic -std=c++17 -fno-omit-frame-pointer -Wold-style-cast -w -Wshorten-64-to-32 -Wno-c++98-compat
+CXXFLAGS += -fpic -std=c++17 -fno-omit-frame-pointer 
 
 ifneq ($(DEBUG),0)
   OPTIMIZATION_ON = 0

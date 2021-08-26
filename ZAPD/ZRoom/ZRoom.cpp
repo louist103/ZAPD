@@ -399,7 +399,7 @@ size_t ZRoom::GetDeclarationSizeFromNeighbor(uint32_t declarationAddress)
 
 size_t ZRoom::GetCommandSizeFromNeighbor(ZRoomCommand* cmd)
 {
-	int32_t cmdIndex = -1;
+	size_t cmdIndex = -1;
 
 	for (size_t i = 0; i < commands.size(); i++)
 	{

@@ -1,13 +1,13 @@
 #pragma once
 
-static uint32_t CRC32B(unsigned char* message, int32_t size)
+static uint32_t CRC32B(unsigned char* message, size_t size)
 {
 	int32_t byte, crc;
 	int32_t mask;
 
 	crc = 0xFFFFFFFF;
 
-	for (int32_t i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		byte = message[i];
 		crc = crc ^ byte;

@@ -767,7 +767,7 @@ std::string ZFile::ProcessDeclarations()
 				// TEST: For now just do Vtx declarations...
 				if (lastItem.second->varType == "static Vtx")
 				{
-					int32_t sizeDiff = curItem.first - (lastItem.first + lastItem.second->size);
+					size_t sizeDiff = curItem.first - (lastItem.first + lastItem.second->size);
 
 					// Make sure there isn't an unaccounted inbetween these two
 					if (sizeDiff == 0)
@@ -800,7 +800,7 @@ std::string ZFile::ProcessDeclarations()
 			if (item.second->alignment == DeclarationAlignment::Align16)
 			{
 				// int32_t lastAddrSizeTest = declarations[lastAddr]->size;
-				int32_t curPtr = lastAddr + declarations[lastAddr]->size;
+				size_t curPtr = lastAddr + declarations[lastAddr]->size;
 
 				while (curPtr % 4 != 0)
 				{
@@ -822,7 +822,7 @@ std::string ZFile::ProcessDeclarations()
 			}
 			else if (item.second->alignment == DeclarationAlignment::Align8)
 			{
-				int32_t curPtr = lastAddr + declarations[lastAddr]->size;
+				size_t curPtr = lastAddr + declarations[lastAddr]->size;
 
 				while (curPtr % 4 != 0)
 				{
@@ -847,7 +847,7 @@ std::string ZFile::ProcessDeclarations()
 
 		if (item.second->padding == DeclarationPadding::Pad16)
 		{
-			int32_t curPtr = item.first + item.second->size;
+			size_t curPtr = item.first + item.second->size;
 
 			while (curPtr % 4 != 0)
 			{

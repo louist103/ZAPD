@@ -283,7 +283,7 @@ BgImage::BgImage(bool nIsSubStruct, const std::string& prefix, const std::vector
 
 void BgImage::ParseRawData()
 {
-	size_t pad = 0x00;
+	uint8_t pad = 0x00;
 	const auto& rawData = parent->GetRawData();
 	if (!isSubStruct)
 	{

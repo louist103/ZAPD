@@ -15,6 +15,7 @@ class ScrollingTexture : public AnitmatedTextureParams
 {
 public:
 	ScrollingTexture(const std::vector<uint8_t>& rawData, uint32_t rawDataIndex);
+	virtual ~ScrollingTexture();
 	std::string GenerateSourceCode(ZRoom* zRoom, uint32_t baseAddress) override;
 	size_t GetParamsSize() override;
 
@@ -51,6 +52,7 @@ class FlashingTexture : public AnitmatedTextureParams
 {
 public:
 	FlashingTexture(const std::vector<uint8_t>& rawData, uint32_t rawDataIndex, int32_t type);
+	virtual ~FlashingTexture();
 	std::string GenerateSourceCode(ZRoom* zRoom, uint32_t baseAddress) override;
 	size_t GetParamsSize() override;
 
@@ -74,6 +76,7 @@ class AnimatedMatTexCycleParams : public AnitmatedTextureParams
 {
 public:
 	AnimatedMatTexCycleParams(const std::vector<uint8_t>& rawData, uint32_t rawDataIndex);
+	virtual ~AnimatedMatTexCycleParams();
 	std::string GenerateSourceCode(ZRoom* zRoom, uint32_t baseAddress) override;
 	size_t GetParamsSize() override;
 

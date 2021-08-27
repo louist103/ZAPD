@@ -135,6 +135,7 @@ public:
 
 	PolygonType1(ZFile* nParent, const std::vector<uint8_t>& nRawData, uint32_t nRawDataIndex,
 	             ZRoom* nRoom);
+	virtual~PolygonType1();
 
 	void ParseRawData() override;
 	void DeclareReferences(const std::string& prefix) override;
@@ -155,6 +156,7 @@ public:
 
 	PolygonType2(ZFile* nParent, const std::vector<uint8_t>& nRawData, uint32_t nRawDataIndex,
 	             ZRoom* nRoom);
+	virtual~PolygonType2();
 
 	void ParseRawData() override;
 	void DeclareReferences(const std::string& prefix) override;

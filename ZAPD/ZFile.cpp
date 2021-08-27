@@ -835,7 +835,7 @@ std::string ZFile::ProcessDeclarations()
 				{
 					char buffer[2048];
 
-					sprintf(buffer, "static u32 align%02X = 0;\n", curPtr);
+					sprintf(buffer, "static u32 align%02zX = 0;\n", curPtr);
 					item.second->preText = buffer + item.second->preText;
 
 					declarations[lastAddr]->size += 4;

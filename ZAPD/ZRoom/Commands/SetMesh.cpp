@@ -473,6 +473,8 @@ PolygonType1::PolygonType1(ZFile* nParent, const std::vector<uint8_t>& nRawData,
 {
 }
 
+PolygonType1::~PolygonType1(){}
+
 void PolygonType1::ParseRawData()
 {
 	const auto& rawData = parent->GetRawData();
@@ -606,6 +608,8 @@ PolygonType2::PolygonType2(ZFile* nParent, const std::vector<uint8_t>& nRawData,
 	: PolygonTypeBase(nParent, nRawData, nRawDataIndex, nRoom)
 {
 }
+
+PolygonType2::~PolygonType2(){}
 
 void PolygonType2::ParseRawData()
 {

@@ -410,7 +410,7 @@ size_t ZRoom::GetCommandSizeFromNeighbor(ZRoomCommand* cmd)
 		}
 	}
 
-	if (cmdIndex != -1)
+	if (static_cast<int32_t>(cmdIndex) != -1)
 	{
 		if (cmdIndex + 1 < commands.size())
 			return commands[cmdIndex + 1]->cmdAddress - commands[cmdIndex]->cmdAddress;

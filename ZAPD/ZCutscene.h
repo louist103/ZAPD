@@ -40,7 +40,7 @@ enum class CutsceneCommands
 	SetTime = 0x008C,
 	Terminator = 0x03E8,
 	End = 0xFFFF,
-	Error = 0xFEAF,
+	Error = 0xFEAF
 };
 
 class CutsceneCameraPoint
@@ -425,7 +425,7 @@ public:
 
 	void ParseRawData() override;
 
-	std::string GetBodySourceCode()const override;
+	std::string GetBodySourceCode() const override;
 	void DeclareVar(const std::string& prefix, const std::string& bodyStr) const override;
 	std::string GetSourceOutputCode(const std::string& prefix) override;
 	size_t GetRawDataSize() const override;

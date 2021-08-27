@@ -119,7 +119,7 @@ enum class F3DZEXOpcode : uint8_t
 	G_SETCOMBINE = 0xFC,
 	G_SETTIMG = 0xFD,
 	G_SETZIMG = 0xFE,
-	G_SETCIMG = 0xFF,
+	G_SETCIMG = 0xFF
 };
 
 enum class F3DZEXTexFormats
@@ -142,7 +142,7 @@ enum class F3DZEXTexSizes
 enum class DListType
 {
 	F3DZEX,
-	F3DEX,
+	F3DEX
 };
 
 enum class OoTSegments
@@ -163,7 +163,7 @@ enum class OoTSegments
 	IconFieldDungeonStatic = 13,
 	IconItemLanguageStatic = 14,
 	ZBuffer = 15,
-	FrameBuffer = 16,
+	FrameBuffer = 16
 };
 
 #define G_MDSFT_ALPHACOMPARE 0

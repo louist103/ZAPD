@@ -47,7 +47,7 @@ enum class ZResourceType
 	Symbol,
 	Texture,
 	Vector,
-	Vertex,
+	Vertex
 };
 
 class ResourceAttribute

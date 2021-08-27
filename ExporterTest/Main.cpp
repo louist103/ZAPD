@@ -1,13 +1,13 @@
-#include <TextureExporter.h>
-#include <RoomExporter.h>
 #include <CollisionExporter.h>
 #include <Globals.h>
+#include <RoomExporter.h>
+#include <TextureExporter.h>
 
 enum class ExporterFileMode
 {
 	ModeExample1 = ZFileMode::Custom + 1,
 	ModeExample2 = ZFileMode::Custom + 2,
-	ModeExample3 = ZFileMode::Custom + 3,
+	ModeExample3 = ZFileMode::Custom + 3
 };
 
 static void ExporterParseFileMode(std::string buildMode, ZFileMode& fileMode)
@@ -18,18 +18,14 @@ static void ExporterParseFileMode(std::string buildMode, ZFileMode& fileMode)
 		fileMode = ExporterFileMode::ModeExample2;
 	else if (buildMode == "me3")
 		fileMode = ExporterFileMode::ModeExample3;
-		fileMode = (ZFileMode)ExporterFileMode::ModeExample1;
-	else if (buildMode == "me2")
-		fileMode = (ZFileMode)ExporterFileMode::ModeExample2;
-	else if (buildMode == "me3")
-		fileMode = (ZFileMode)ExporterFileMode::ModeExample3;
+	fileMode = (ZFileMode)ExporterFileMode::ModeExample1;
+	else if (buildMode == "me2") fileMode = (ZFileMode)ExporterFileMode::ModeExample2;
+	else if (buildMode == "me3") fileMode = (ZFileMode)ExporterFileMode::ModeExample3;
 	if (arg == "--do-x")
 	{
-
 	}
 	else if (arg == "--do-y")
 	{
-
 	}
 }
 
@@ -60,7 +56,8 @@ static void ExporterFileEnd(ZFile* file)
 static void ImportExporters()
 {
 	// In this example we set up a new exporter called "EXAMPLE".
-	// By running ZAPD with the argument -se EXAMPLE, we tell it that we want to use this exporter for our resources.
+	// By running ZAPD with the argument -se EXAMPLE, we tell it that we want to use this exporter
+	// for our resources.
 	ExporterSet* exporterSet = new ExporterSet();
 	exporterSet->processFileModeFunc = ExporterProcessFileMode;
 	exporterSet->parseFileModeFunc = ExporterParseFileMode;
@@ -74,5 +71,6 @@ static void ImportExporters()
 	Globals::AddExporter("EXAMPLE", exporterSet);
 }
 
-// When ZAPD starts up, it will automatically call the below function, which in turn sets up our exporters.
+// When ZAPD starts up, it will automatically call the below function, which in turn sets up our
+// exporters.
 REGISTER_EXPORTER(ImportExporters)

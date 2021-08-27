@@ -14,7 +14,7 @@ enum class SeekOffsetType
 enum class Endianess
 {
 	Little = 0,
-	Big = 1,
+	Big = 1
 };
 
 class Stream

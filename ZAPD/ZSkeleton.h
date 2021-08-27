@@ -12,7 +12,7 @@ enum class ZSkeletonType
 {
 	Normal,
 	Flex,
-	Curve,
+	Curve
 };
 
 class ZLimbTable : public ZResource

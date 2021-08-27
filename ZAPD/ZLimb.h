@@ -13,7 +13,7 @@ enum class ZLimbType
 	LOD,
 	Skin,
 	Curve,
-	Legacy,
+	Legacy
 };
 
 // TODO: check if more types exists
@@ -22,7 +22,7 @@ enum class ZLimbSkinType
 	SkinType_0,           // Segment = 0
 	SkinType_4 = 4,       // Segment = segmented address // Struct_800A5E28
 	SkinType_5 = 5,       // Segment = 0
-	SkinType_DList = 11,  // Segment = DList address
+	SkinType_DList = 11  // Segment = DList address
 };
 
 class Struct_800A57C0

@@ -15,7 +15,7 @@ enum class TextureType
 	Grayscale8bpp,
 	GrayscaleAlpha4bpp,
 	GrayscaleAlpha8bpp,
-	GrayscaleAlpha16bpp,
+	GrayscaleAlpha16bpp
 };
 
 class ZTexture : public ZResource

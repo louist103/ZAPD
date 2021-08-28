@@ -19,4 +19,4 @@ $(LIB): $(OBJ)
 	$(AR) rcs $@ $^
 
 %.o: %.cpp
-	$(COMPILE.c) $(OUTPUT_OPTION) $(CXXFLAGS) $< -I ./ -I ../ZAPD -I ../ZAPDUtils -I ../lib/tinyxml2
+	$(CXX) $(OUTPUT_OPTION) $(CXXFLAGS) -c $< -I ./ -I ../ZAPD -I ../ZAPDUtils -I ../lib/tinyxml2

@@ -38,7 +38,6 @@ ifneq ($(UNAME), Darwin)
     LDFLAGS += -Wl,-export-dynamic -lstdc++fs
 endif
 
-# ZAPD_SRC_DIRS := ZAPD ZAPD/ZRoom ZAPD/ZRoom/Commands ZAPD/Overlays
 ZAPD_SRC_DIRS := $(shell find ZAPD -type d)
 SRC_DIRS = $(ZAPD_SRC_DIRS) lib/tinyxml2
 
@@ -46,7 +45,6 @@ ZAPD_CPP_FILES := $(foreach dir,$(ZAPD_SRC_DIRS),$(wildcard $(dir)/*.cpp))
 ZAPD_H_FILES   := $(foreach dir,$(ZAPD_SRC_DIRS),$(wildcard $(dir)/*.h))
 
 CPP_FILES += $(ZAPD_CPP_FILES) lib/tinyxml2/tinyxml2.cpp
-# O_FILES   := $(CPP_FILES:.cpp=.o)
 O_FILES   := $(foreach f,$(CPP_FILES:.cpp=.o),build/$f)
 
 

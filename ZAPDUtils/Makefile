@@ -23,9 +23,6 @@ format:
 $(O_FILES): $(CPP_FILES)
 
 $(LIB): $(O_FILES)
-#	$(info SRC_DIRS is "$(SRC_DIRS)")
-#	$(info CPP_FILES is "$(CPP_FILES)")
-#	$(info O_FILES is "$(O_FILES)")
 	$(AR) rcs $@ $^
 
 build/%.o: %.cpp

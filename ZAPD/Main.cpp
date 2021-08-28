@@ -23,7 +23,7 @@
 #include <string>
 #include "tinyxml2.h"
 
-extern char gBuildHash[];
+extern const char gBuildHash[];
 
 using namespace tinyxml2;
 

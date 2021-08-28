@@ -1,70 +1,72 @@
 #include "BitConverter.h"
+#include <cstring>
 
-static int8_t BitConverter::ToInt8BE(const uint8_t* data, int32_t offset)
+
+int8_t BitConverter::ToInt8BE(const uint8_t* data, int32_t offset)
 {
 	return (uint8_t)data[offset + 0];
 }
 
-static int8_t BitConverter::ToInt8BE(const std::vector<uint8_t>& data, int32_t offset)
+int8_t BitConverter::ToInt8BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return (uint8_t)data[offset + 0];
 }
 
-static uint8_t BitConverter::ToUInt8BE(const uint8_t* data, int32_t offset)
+uint8_t BitConverter::ToUInt8BE(const uint8_t* data, int32_t offset)
 {
 	return (uint8_t)data[offset + 0];
 }
 
-static uint8_t BitConverter::ToUInt8BE(const std::vector<uint8_t>& data, int32_t offset)
+uint8_t BitConverter::ToUInt8BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return (uint8_t)data[offset + 0];
 }
 
-static int16_t BitConverter::ToInt16BE(const uint8_t* data, int32_t offset)
+int16_t BitConverter::ToInt16BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint16_t)data[offset + 0] << 8) + (uint16_t)data[offset + 1];
 }
 
-static int16_t BitConverter::ToInt16BE(const std::vector<uint8_t>& data, int32_t offset)
+int16_t BitConverter::ToInt16BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint16_t)data[offset + 0] << 8) + (uint16_t)data[offset + 1];
 }
 
-static uint16_t BitConverter::ToUInt16BE(const uint8_t* data, int32_t offset)
+uint16_t BitConverter::ToUInt16BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint16_t)data[offset + 0] << 8) + (uint16_t)data[offset + 1];
 }
 
-static uint16_t BitConverter::ToUInt16BE(const std::vector<uint8_t>& data, int32_t offset)
+uint16_t BitConverter::ToUInt16BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint16_t)data[offset + 0] << 8) + (uint16_t)data[offset + 1];
 }
 
-static int32_t BitConverter::ToInt32BE(const uint8_t* data, int32_t offset)
+int32_t BitConverter::ToInt32BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
 	       ((uint32_t)data[offset + 2] << 8) + (uint32_t)data[offset + 3];
 }
 
-static int32_t BitConverter::ToInt32BE(const std::vector<uint8_t>& data, int32_t offset)
+int32_t BitConverter::ToInt32BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
 	       ((uint32_t)data[offset + 2] << 8) + (uint32_t)data[offset + 3];
 }
 
-static uint32_t BitConverter::ToUInt32BE(const uint8_t* data, int32_t offset)
+uint32_t BitConverter::ToUInt32BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
 	       ((uint32_t)data[offset + 2] << 8) + (uint32_t)data[offset + 3];
 }
 
-static uint32_t BitConverter::ToUInt32BE(const std::vector<uint8_t>& data, int32_t offset)
+uint32_t BitConverter::ToUInt32BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
 	       ((uint32_t)data[offset + 2] << 8) + (uint32_t)data[offset + 3];
 }
 
-static int64_t BitConverter::ToInt64BE(const uint8_t* data, int32_t offset)
+int64_t BitConverter::ToInt64BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
 	       ((uint64_t)data[offset + 2] << 40) + ((uint64_t)data[offset + 3] << 32) +
@@ -72,7 +74,7 @@ static int64_t BitConverter::ToInt64BE(const uint8_t* data, int32_t offset)
 	       ((uint64_t)data[offset + 6] << 8) + ((uint64_t)data[offset + 7]);
 }
 
-static int64_t BitConverter::ToInt64BE(const std::vector<uint8_t>& data, int32_t offset)
+int64_t BitConverter::ToInt64BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
 	       ((uint64_t)data[offset + 2] << 40) + ((uint64_t)data[offset + 3] << 32) +
@@ -80,7 +82,7 @@ static int64_t BitConverter::ToInt64BE(const std::vector<uint8_t>& data, int32_t
 	       ((uint64_t)data[offset + 6] << 8) + ((uint64_t)data[offset + 7]);
 }
 
-static uint64_t BitConverter::ToUInt64BE(const uint8_t* data, int32_t offset)
+uint64_t BitConverter::ToUInt64BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
 	       ((uint64_t)data[offset + 2] << 40) + ((uint64_t)data[offset + 3] << 32) +
@@ -88,7 +90,7 @@ static uint64_t BitConverter::ToUInt64BE(const uint8_t* data, int32_t offset)
 	       ((uint64_t)data[offset + 6] << 8) + ((uint64_t)data[offset + 7]);
 }
 
-static uint64_t BitConverter::ToUInt64BE(const std::vector<uint8_t>& data, int32_t offset)
+uint64_t BitConverter::ToUInt64BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
 	       ((uint64_t)data[offset + 2] << 40) + ((uint64_t)data[offset + 3] << 32) +
@@ -96,7 +98,7 @@ static uint64_t BitConverter::ToUInt64BE(const std::vector<uint8_t>& data, int32
 	       ((uint64_t)data[offset + 6] << 8) + ((uint64_t)data[offset + 7]);
 }
 
-static float BitConverter::ToFloatBE(const uint8_t* data, int32_t offset)
+float BitConverter::ToFloatBE(const uint8_t* data, int32_t offset)
 {
 	float value;
 	uint32_t floatData = ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
@@ -106,7 +108,7 @@ static float BitConverter::ToFloatBE(const uint8_t* data, int32_t offset)
 	return value;
 }
 
-static float BitConverter::ToFloatBE(const std::vector<uint8_t>& data, int32_t offset)
+float BitConverter::ToFloatBE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	float value;
 	uint32_t floatData = ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
@@ -116,7 +118,7 @@ static float BitConverter::ToFloatBE(const std::vector<uint8_t>& data, int32_t o
 	return value;
 }
 
-static double BitConverter::ToDoubleBE(const uint8_t* data, int32_t offset)
+double BitConverter::ToDoubleBE(const uint8_t* data, int32_t offset)
 {
 	double value;
 	uint64_t floatData = ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
@@ -131,7 +133,7 @@ static double BitConverter::ToDoubleBE(const uint8_t* data, int32_t offset)
 	return value;
 }
 
-static double BitConverter::ToDoubleBE(const std::vector<uint8_t>& data, int32_t offset)
+double BitConverter::ToDoubleBE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	double value;
 	uint64_t floatData = ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +

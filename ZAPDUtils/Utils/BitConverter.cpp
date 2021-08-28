@@ -1,70 +1,70 @@
 #include "BitConverter.h"
 
-int8_t ToInt8BE(const uint8_t* data, int32_t offset)
+static int8_t BitConverter::ToInt8BE(const uint8_t* data, int32_t offset)
 {
 	return (uint8_t)data[offset + 0];
 }
 
-int8_t ToInt8BE(const std::vector<uint8_t>& data, int32_t offset)
+static int8_t BitConverter::ToInt8BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return (uint8_t)data[offset + 0];
 }
 
-uint8_t ToUInt8BE(const uint8_t* data, int32_t offset)
+static uint8_t BitConverter::ToUInt8BE(const uint8_t* data, int32_t offset)
 {
 	return (uint8_t)data[offset + 0];
 }
 
-uint8_t ToUInt8BE(const std::vector<uint8_t>& data, int32_t offset)
+static uint8_t BitConverter::ToUInt8BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return (uint8_t)data[offset + 0];
 }
 
-int16_t ToInt16BE(const uint8_t* data, int32_t offset)
+static int16_t BitConverter::ToInt16BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint16_t)data[offset + 0] << 8) + (uint16_t)data[offset + 1];
 }
 
-int16_t ToInt16BE(const std::vector<uint8_t>& data, int32_t offset)
+static int16_t BitConverter::ToInt16BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint16_t)data[offset + 0] << 8) + (uint16_t)data[offset + 1];
 }
 
-uint16_t ToUInt16BE(const uint8_t* data, int32_t offset)
+static uint16_t BitConverter::ToUInt16BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint16_t)data[offset + 0] << 8) + (uint16_t)data[offset + 1];
 }
 
-uint16_t ToUInt16BE(const std::vector<uint8_t>& data, int32_t offset)
+static uint16_t BitConverter::ToUInt16BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint16_t)data[offset + 0] << 8) + (uint16_t)data[offset + 1];
 }
 
-int32_t ToInt32BE(const uint8_t* data, int32_t offset)
+static int32_t BitConverter::ToInt32BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
 	       ((uint32_t)data[offset + 2] << 8) + (uint32_t)data[offset + 3];
 }
 
-int32_t ToInt32BE(const std::vector<uint8_t>& data, int32_t offset)
+static int32_t BitConverter::ToInt32BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
 	       ((uint32_t)data[offset + 2] << 8) + (uint32_t)data[offset + 3];
 }
 
-uint32_t ToUInt32BE(const uint8_t* data, int32_t offset)
+static uint32_t BitConverter::ToUInt32BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
 	       ((uint32_t)data[offset + 2] << 8) + (uint32_t)data[offset + 3];
 }
 
-uint32_t ToUInt32BE(const std::vector<uint8_t>& data, int32_t offset)
+static uint32_t BitConverter::ToUInt32BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
 	       ((uint32_t)data[offset + 2] << 8) + (uint32_t)data[offset + 3];
 }
 
-int64_t ToInt64BE(const uint8_t* data, int32_t offset)
+static int64_t BitConverter::ToInt64BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
 	       ((uint64_t)data[offset + 2] << 40) + ((uint64_t)data[offset + 3] << 32) +
@@ -72,7 +72,7 @@ int64_t ToInt64BE(const uint8_t* data, int32_t offset)
 	       ((uint64_t)data[offset + 6] << 8) + ((uint64_t)data[offset + 7]);
 }
 
-int64_t ToInt64BE(const std::vector<uint8_t>& data, int32_t offset)
+static int64_t BitConverter::ToInt64BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
 	       ((uint64_t)data[offset + 2] << 40) + ((uint64_t)data[offset + 3] << 32) +
@@ -80,7 +80,7 @@ int64_t ToInt64BE(const std::vector<uint8_t>& data, int32_t offset)
 	       ((uint64_t)data[offset + 6] << 8) + ((uint64_t)data[offset + 7]);
 }
 
-uint64_t ToUInt64BE(const uint8_t* data, int32_t offset)
+static uint64_t BitConverter::ToUInt64BE(const uint8_t* data, int32_t offset)
 {
 	return ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
 	       ((uint64_t)data[offset + 2] << 40) + ((uint64_t)data[offset + 3] << 32) +
@@ -88,7 +88,7 @@ uint64_t ToUInt64BE(const uint8_t* data, int32_t offset)
 	       ((uint64_t)data[offset + 6] << 8) + ((uint64_t)data[offset + 7]);
 }
 
-uint64_t ToUInt64BE(const std::vector<uint8_t>& data, int32_t offset)
+static uint64_t BitConverter::ToUInt64BE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	return ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
 	       ((uint64_t)data[offset + 2] << 40) + ((uint64_t)data[offset + 3] << 32) +
@@ -96,7 +96,7 @@ uint64_t ToUInt64BE(const std::vector<uint8_t>& data, int32_t offset)
 	       ((uint64_t)data[offset + 6] << 8) + ((uint64_t)data[offset + 7]);
 }
 
-float ToFloatBE(const uint8_t* data, int32_t offset)
+static float BitConverter::ToFloatBE(const uint8_t* data, int32_t offset)
 {
 	float value;
 	uint32_t floatData = ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
@@ -106,7 +106,7 @@ float ToFloatBE(const uint8_t* data, int32_t offset)
 	return value;
 }
 
-float ToFloatBE(const std::vector<uint8_t>& data, int32_t offset)
+static float BitConverter::ToFloatBE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	float value;
 	uint32_t floatData = ((uint32_t)data[offset + 0] << 24) + ((uint32_t)data[offset + 1] << 16) +
@@ -116,7 +116,7 @@ float ToFloatBE(const std::vector<uint8_t>& data, int32_t offset)
 	return value;
 }
 
-double ToDoubleBE(const uint8_t* data, int32_t offset)
+static double BitConverter::ToDoubleBE(const uint8_t* data, int32_t offset)
 {
 	double value;
 	uint64_t floatData = ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +
@@ -131,7 +131,7 @@ double ToDoubleBE(const uint8_t* data, int32_t offset)
 	return value;
 }
 
-double ToDoubleBE(const std::vector<uint8_t>& data, int32_t offset)
+static double BitConverter::ToDoubleBE(const std::vector<uint8_t>& data, int32_t offset)
 {
 	double value;
 	uint64_t floatData = ((uint64_t)data[offset + 0] << 56) + ((uint64_t)data[offset + 1] << 48) +

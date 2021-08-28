@@ -1,5 +1,5 @@
 CXXFLAGS = -Wall -O2 -g -std=c++17
-OBJ = Utils/BinaryWriter.o Utils/MemoryStream.o
+OBJ = Utils/BinaryWriter.o Utils/MemoryStream.o Utils/BitConverter.o
 LIB = ZAPDUtils.a
 
 CPPFLAGS-$(MT) += -DCONFIG_MT
@@ -14,7 +14,7 @@ clean:
 
 .INTERMEDIATE: $(OBJ)
 
-$(OBJ): Utils/BinaryReader.cpp Utils/BinaryWriter.cpp Utils/MemoryStream.cpp
+$(OBJ): Utils/BinaryReader.cpp Utils/BinaryWriter.cpp Utils/MemoryStream.cpp Utils/BitConverter.cpp
 
 $(LIB): $(OBJ)
 	$(AR) rcs $@ $^

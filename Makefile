@@ -2,8 +2,8 @@ OPTIMIZATION_ON ?= 1
 ASAN ?= 0
 DEPRECATION_ON ?= 1
 DEBUG ?= 0
-CXXFLAGS ?= 
-COPYCHECK_ARGS ?= 
+CXXFLAGS ?=
+COPYCHECK_ARGS ?=
 
 CXX := g++
 INC := -I ZAPD -I lib/assimp/include -I lib/elfio -I lib/json/include -I lib/stb -I lib/tinygltf -I lib/libgfxd -I lib/tinyxml2 -I ZAPDUtils
@@ -81,8 +81,8 @@ format:
 build/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
-build/ZAPD/Main.o: genbuildinfo ZAPD/Main.cpp
-	$(CXX) $(CXXFLAGS) $(INC) -c ZAPD/Main.cpp -o $@
+build/ZAPD/Main.o: ZAPD/Main.cpp genbuildinfo
+	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 lib/libgfxd/libgfxd.a:
 	$(MAKE) -C lib/libgfxd

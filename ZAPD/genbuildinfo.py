@@ -15,4 +15,4 @@ with open("ZAPD/BuildInfo.cpp", "w+") as buildFile:
     if args.devel:
         label += " ~ Development version"
     buildFile.write("extern const char gBuildHash[] = \"" + label + "\";\n")
-    #buildFile.write("const char gBuildDate[] = \"" + now.strftime("%Y-%m-%d %H:%M:%S") + "\";\n")
+    #buildFile.write("extern const char gBuildDate[] = \"" + now.strftime("%Y-%m-%d %H:%M:%S") + "\";\n")

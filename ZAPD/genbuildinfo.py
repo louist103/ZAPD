@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--devel", action="store_true")
 args = parser.parse_args()
 
-with open("ZAPD/BuildInfo.h", "w+") as buildFile:
+with open("ZAPD/BuildInfo.cpp", "w+") as buildFile:
     label = subprocess.check_output(["git", "describe", "--always"]).strip().decode("utf-8")
     now = datetime.now()
     if args.devel:

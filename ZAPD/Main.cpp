@@ -1,4 +1,3 @@
-// #include "BuildInfo.h"
 #include <Utils/Directory.h>
 #include <Utils/File.h>
 #include <Utils/Path.h>

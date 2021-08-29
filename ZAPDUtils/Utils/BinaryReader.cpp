@@ -1,6 +1,5 @@
-#pragma once
-
 #include "BinaryReader.h"
+
 #include "Stream.h"
 
 BinaryReader::BinaryReader(Stream* nStream)

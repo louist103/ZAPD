@@ -21,7 +21,7 @@ class Stream
 {
 public:
 	virtual uint64_t GetLength() = 0;
-	uint64_t GetBaseAddress() { return baseAddress; }
+	uint64_t GetBaseAddress();
 
 	virtual void Seek(int32_t offset, SeekOffsetType seekType) = 0;
 

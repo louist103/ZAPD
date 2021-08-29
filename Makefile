@@ -2,8 +2,8 @@ OPTIMIZATION_ON ?= 1
 ASAN ?= 0
 DEPRECATION_ON ?= 1
 DEBUG ?= 0
-CXXFLAGS ?= 
-COPYCHECK_ARGS ?= 
+CXXFLAGS ?=
+COPYCHECK_ARGS ?=
 
 CXX := g++
 INC := -I ZAPD -I lib/assimp/include -I lib/elfio -I lib/json/include -I lib/stb -I lib/tinygltf -I lib/libgfxd -I lib/tinyxml2 -I ZAPDUtils
@@ -38,47 +38,60 @@ ifneq ($(UNAME), Darwin)
     LDFLAGS += -Wl,-export-dynamic -lstdc++fs
 endif
 
-SRC_DIRS := ZAPD ZAPD/ZRoom ZAPD/ZRoom/Commands ZAPD/Overlays ZAPD/HighLevel ZAPD/Utils
+ZAPD_SRC_DIRS := $(shell find ZAPD -type d)
+SRC_DIRS = $(ZAPD_SRC_DIRS) lib/tinyxml2
 
-ZAPD_CPP_FILES := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
-ZAPD_H_FILES   := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.h))
+ZAPD_CPP_FILES := $(foreach dir,$(ZAPD_SRC_DIRS),$(wildcard $(dir)/*.cpp))
+ZAPD_H_FILES   := $(foreach dir,$(ZAPD_SRC_DIRS),$(wildcard $(dir)/*.h))
 
 CPP_FILES += $(ZAPD_CPP_FILES) lib/tinyxml2/tinyxml2.cpp
-O_FILES   := $(CPP_FILES:.cpp=.o)
+O_FILES   := $(foreach f,$(CPP_FILES:.cpp=.o),build/$f)
+
+
+# create build directories
+$(shell mkdir -p $(foreach dir,$(SRC_DIRS),build/$(dir)))
+
 
 all: ZAPD.out copycheck
 
 genbuildinfo:
 	python3 ZAPD/genbuildinfo.py $(COPYCHECK_ARGS)
+	$(CXX) $(CXXFLAGS) $(INC) -c ZAPD/BuildInfo.cpp -o build/ZAPD/BuildInfo.o
 
 copycheck: ZAPD.out
 	python3 copycheck.py
 
 clean:
-	rm -f $(O_FILES) ZAPD.out
+	rm -rf build ZAPD.out
 	$(MAKE) -C lib/libgfxd clean
+	$(MAKE) -C ZAPDUtils clean
+	$(MAKE) -C ExporterTest clean
 
 rebuild: clean all
 
 format:
 	clang-format-11 -i $(ZAPD_CPP_FILES) $(ZAPD_H_FILES)
+	$(MAKE) -C ZAPDUtils format
+	$(MAKE) -C ExporterTest format
 
 .PHONY: all genbuildinfo copycheck clean rebuild format
 
-%.o: %.cpp
+build/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
-ZAPD/Main.o: genbuildinfo ZAPD/Main.cpp
-	$(CXX) $(CXXFLAGS) $(INC) -c ZAPD/Main.cpp -o $@
+build/ZAPD/Main.o: ZAPD/Main.cpp genbuildinfo
+	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 lib/libgfxd/libgfxd.a:
 	$(MAKE) -C lib/libgfxd
 
-ExporterTest/ExporterTest.a:
+.PHONY: ExporterTest
+ExporterTest:
 	$(MAKE) -C ExporterTest
 
-ZAPDUtils/ZAPDUtils.a:
+.PHONY: ZAPDUtils
+ZAPDUtils:
 	$(MAKE) -C ZAPDUtils
 
-ZAPD.out: $(O_FILES) lib/libgfxd/libgfxd.a ExporterTest/ExporterTest.a ZAPDUtils/ZAPDUtils.a
+ZAPD.out: $(O_FILES) lib/libgfxd/libgfxd.a ExporterTest ZAPDUtils
 	$(CXX) $(CXXFLAGS) $(INC) $(O_FILES) lib/libgfxd/libgfxd.a ZAPDUtils/ZAPDUtils.a -Wl,--whole-archive ExporterTest/ExporterTest.a -Wl,--no-whole-archive -o $@ $(FS_INC) $(LDFLAGS)

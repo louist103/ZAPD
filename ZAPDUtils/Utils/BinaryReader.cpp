@@ -1,6 +1,5 @@
-#pragma once
-
 #include "BinaryReader.h"
+
 #include "Stream.h"
 
 BinaryReader::BinaryReader(Stream* nStream)
@@ -128,7 +127,7 @@ std::string BinaryReader::ReadString()
 {
 	std::string res = "";
 	char c;
-		
+
 	do
 	{
 		c = ReadChar();
@@ -136,7 +135,6 @@ std::string BinaryReader::ReadString()
 		if (c != 0)
 			res += c;
 	} while (c != 0);
-
 
 	return res;
 }

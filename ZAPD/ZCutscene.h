@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <memory>
 #include "tinyxml2.h"
 
 #include "OtherStructs/Cutscene_Commands.h"
@@ -28,9 +29,9 @@ public:
 
 	int32_t numCommands;
 	int32_t endFrame;
-	std::vector<CutsceneCommand*> commands;
+	std::vector<std::unique_ptr<CutsceneCommand>> commands;
 
 protected:
-	CutsceneCommand* GetCommandOoT(uint32_t id, offset_t currentPtr) const;
-	CutsceneCommand* GetCommandMM(uint32_t id, offset_t currentPtr) const;
+	std::unique_ptr<CutsceneCommand> GetCommandOoT(uint32_t id, offset_t currentPtr) const;
+	std::unique_ptr<CutsceneCommand> GetCommandMM(uint32_t id, offset_t currentPtr) const;
 };

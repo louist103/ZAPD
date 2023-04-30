@@ -17,8 +17,8 @@ ZCutscene::ZCutscene(ZFile* nParent) : ZResource(nParent)
 
 ZCutscene::~ZCutscene()
 {
-	for (CutsceneCommand* cmd : commands)
-		delete cmd;
+	//for (CutsceneCommand* cmd : commands)
+	//	delete cmd;
 }
 
 std::string ZCutscene::GetBodySourceCode() const
@@ -29,8 +29,7 @@ std::string ZCutscene::GetBodySourceCode() const
 
 	for (size_t i = 0; i < commands.size(); i++)
 	{
-		CutsceneCommand* cmd = commands[i];
-		output += "    " + cmd->GenerateSourceCode();
+		output += "    " + commands[i]->GenerateSourceCode();
 	}
 
 	output += StringHelper::Sprintf("    CS_END(),", commands.size(), endFrame);
@@ -47,9 +46,7 @@ size_t ZCutscene::GetRawDataSize() const
 
 	for (size_t i = 0; i < commands.size(); i++)
 	{
-		CutsceneCommand* cmd = commands[i];
-
-		size += cmd->GetCommandSize();
+		size += commands[i]->GetCommandSize();
 	}
 
 	// End
@@ -72,7 +69,6 @@ void ZCutscene::ParseRawData()
 	const auto& rawData = parent->GetRawData();
 
 	numCommands = BitConverter::ToInt32BE(rawData, rawDataIndex + 0);
-	commands = std::vector<CutsceneCommand*>();
 
 	endFrame = BitConverter::ToInt32BE(rawData, rawDataIndex + 4);
 	offset_t currentPtr = rawDataIndex + 8;
@@ -91,8 +87,8 @@ void ZCutscene::ParseRawData()
 
 		currentPtr += 4;
 
-		CutsceneCommand* cmd = nullptr;
-
+		//CutsceneCommand* cmd = nullptr;
+		std::unique_ptr<CutsceneCommand> cmd;
 		if (Globals::Instance->game == ZGame::MM_RETAIL)
 		{
 			cmd = GetCommandMM(id, currentPtr);
@@ -109,7 +105,7 @@ void ZCutscene::ParseRawData()
 				StringHelper::Sprintf("Cutscene command not implemented"),
 				StringHelper::Sprintf("Command ID: 0x%X\nIndex: %d\ncurrentPtr-rawDataIndex: 0x%X",
 			                          id, i, currentPtr - rawDataIndex));
-			cmd = new CutsceneMMCommand_NonImplemented(rawData, currentPtr);
+			cmd = std::make_unique<CutsceneMMCommand_NonImplemented>(rawData, currentPtr);
 		}
 
 		assert(cmd != nullptr);
@@ -123,11 +119,11 @@ void ZCutscene::ParseRawData()
 		}
 		currentPtr += commmandSize - 4;
 
-		commands.push_back(cmd);
+		commands.push_back(std::move(cmd));
 	}
 }
 
-CutsceneCommand* ZCutscene::GetCommandOoT(uint32_t id, offset_t currentPtr) const
+std::unique_ptr<CutsceneCommand> ZCutscene::GetCommandOoT(uint32_t id, offset_t currentPtr) const
 {
 	CutsceneCommands cmdID = static_cast<CutsceneCommands>(id);
 
@@ -231,7 +227,7 @@ CutsceneCommand* ZCutscene::GetCommandOoT(uint32_t id, offset_t currentPtr) cons
 	case 142:
 	case 62:   // CutsceneCommands::SetActorAction9
 	case 143:  // CutsceneCommands::SetActorAction10
-		return new CutsceneCommand_ActorAction(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_ActorAction>(rawData, currentPtr);
 
 	case 0x0B:
 	case 0x0D:
@@ -250,7 +246,7 @@ CutsceneCommand* ZCutscene::GetCommandOoT(uint32_t id, offset_t currentPtr) cons
 	case 0x70:
 	case 0x71:
 	case 0x4A:
-		return new CutsceneCommand_GenericCmd(rawData, currentPtr, cmdID);
+		return std::make_unique<CutsceneCommand_GenericCmd>(rawData, currentPtr, cmdID);
 	}
 
 	switch (cmdID)
@@ -260,22 +256,22 @@ CutsceneCommand* ZCutscene::GetCommandOoT(uint32_t id, offset_t currentPtr) cons
 	case CutsceneCommands::PlayBGM:
 	case CutsceneCommands::StopBGM:
 	case CutsceneCommands::FadeBGM:
-		return new CutsceneCommand_GenericCmd(rawData, currentPtr, cmdID);
+		return std::make_unique<CutsceneCommand_GenericCmd>(rawData, currentPtr, cmdID);
 
 	case CutsceneCommands::SetCameraPos:
 	case CutsceneCommands::SetCameraFocus:
 	case CutsceneCommands::SetCameraPosLink:
 	case CutsceneCommands::SetCameraFocusLink:
-		return new CutsceneCommandSetCameraPos(rawData, currentPtr);
+		return std::make_unique<CutsceneCommandSetCameraPos>(rawData, currentPtr);
 
 	case CutsceneCommands::Cmd07:
 		break;
 	case CutsceneCommands::Cmd08:
 		break;
 	case CutsceneCommands::Cmd09:
-		return new CutsceneCommand_Rumble(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_Rumble>(rawData, currentPtr);
 	case CutsceneCommands::Textbox:
-		return new CutsceneCommand_TextBox(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_TextBox>(rawData, currentPtr);
 
 	case CutsceneCommands::SetPlayerAction:
 	case CutsceneCommands::SetActorAction1:
@@ -291,18 +287,18 @@ CutsceneCommand* ZCutscene::GetCommandOoT(uint32_t id, offset_t currentPtr) cons
 		break;
 
 	case CutsceneCommands::SetSceneTransFX:
-		return new CutsceneCommandSceneTransFX(rawData, currentPtr);
+		return std::make_unique<CutsceneCommandSceneTransFX>(rawData, currentPtr);
 
 	case CutsceneCommands::SetTime:
-		return new CutsceneCommand_SetTime(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_SetTime>(rawData, currentPtr);
 	case CutsceneCommands::Terminator:
-		return new CutsceneCommand_Terminator(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_Terminator>(rawData, currentPtr);
 	}
 
 	return nullptr;
 }
 
-CutsceneCommand* ZCutscene::GetCommandMM(uint32_t id, offset_t currentPtr) const
+std::unique_ptr<CutsceneCommand> ZCutscene::GetCommandMM(uint32_t id, offset_t currentPtr) const
 {
 	CutsceneMMCommands cmdID = static_cast<CutsceneMMCommands>(id);
 
@@ -310,7 +306,7 @@ CutsceneCommand* ZCutscene::GetCommandMM(uint32_t id, offset_t currentPtr) const
 
 	if (((id >= 100) && (id < 150)) || (id == 201) || ((id >= 450) && (id < 600)))
 	{
-		return new CutsceneCommand_ActorAction(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_ActorAction>(rawData, currentPtr);
 	}
 
 	switch (cmdID)
@@ -342,22 +338,22 @@ CutsceneCommand* ZCutscene::GetCommandMM(uint32_t id, offset_t currentPtr) const
 	case CutsceneMMCommands::CS_CMD_UNK_108:
 	case CutsceneMMCommands::CS_CMD_UNK_109:
 	case CutsceneMMCommands::CS_CMD_UNK_12D:
-		return new CutsceneMMCommand_GenericCmd(rawData, currentPtr, cmdID);
+		return std::make_unique<CutsceneMMCommand_GenericCmd>(rawData, currentPtr, cmdID);
 
 	case CutsceneMMCommands::CS_CMD_TEXTBOX:
-		return new CutsceneCommand_TextBox(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_TextBox>(rawData, currentPtr);
 	case CutsceneMMCommands::CS_CMD_CAMERA:
-		return new CutsceneMMCommand_Camera(rawData, currentPtr);
+		return std::make_unique<CutsceneMMCommand_Camera>(rawData, currentPtr);
 	case CutsceneMMCommands::CS_CMD_FADESCREEN:
-		return new CutsceneMMCommand_FadeScreen(rawData, currentPtr);
+		return std::make_unique<CutsceneMMCommand_FadeScreen>(rawData, currentPtr);
 	case CutsceneMMCommands::CS_CMD_FADESEQ:
-		return new CutsceneMMCommand_FadeSeq(rawData, currentPtr);
+		return std::make_unique<CutsceneMMCommand_FadeSeq>(rawData, currentPtr);
 	case CutsceneMMCommands::CS_CMD_SETTIME:
-		return new CutsceneCommand_SetTime(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_SetTime>(rawData, currentPtr);
 	case CutsceneMMCommands::CS_CMD_SET_PLAYER_ACTION:
-		return new CutsceneCommand_ActorAction(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_ActorAction>(rawData, currentPtr);
 	case CutsceneMMCommands::CS_CMD_RUMBLE:
-		return new CutsceneCommand_Rumble(rawData, currentPtr);
+		return std::make_unique<CutsceneCommand_Rumble>(rawData, currentPtr);
 	}
 
 	return nullptr;

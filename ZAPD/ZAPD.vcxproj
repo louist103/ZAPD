@@ -30,7 +30,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -241,6 +241,7 @@ mkdir build\ZAPD
     <ClCompile Include="ZRoom\ZRoomCommand.cpp" />
     <ClCompile Include="ZString.cpp" />
     <ClCompile Include="ZSymbol.cpp" />
+    <ClCompile Include="ZText.cpp" />
     <ClCompile Include="ZTexture.cpp" />
     <ClCompile Include="ZTextureAnimation.cpp" />
     <ClCompile Include="ZVector.cpp" />
@@ -329,6 +330,7 @@ mkdir build\ZAPD
     <ClInclude Include="ZRoom\ZRoomCommand.h" />
     <ClInclude Include="ZString.h" />
     <ClInclude Include="ZSymbol.h" />
+    <ClInclude Include="ZText.h" />
     <ClInclude Include="ZTexture.h" />
     <ClInclude Include="ZTextureAnimation.h" />
     <ClInclude Include="ZVector.h" />

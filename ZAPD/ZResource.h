@@ -47,6 +47,7 @@ enum class ZResourceType
 	Skeleton,
 	String,
 	Symbol,
+	Text,
 	Texture,
 	TextureAnimation,
 	TextureAnimationParams,

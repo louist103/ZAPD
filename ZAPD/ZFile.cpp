@@ -764,10 +764,10 @@ void ZFile::GenerateSourceFiles()
 	if (Globals::Instance->verbosity >= VerbosityLevel::VERBOSITY_INFO)
 		printf("Writing C file: %s\n", outPath.c_str());
 
-	OutputFormatter formatter;
-	formatter.Write(sourceOutput);
+	// OutputFormatter formatter;
+	// formatter.Write(sourceOutput);
 
-	File::WriteAllText(outPath, formatter.GetOutput());
+	File::WriteAllText(outPath, sourceOutput);
 
 	GenerateSourceHeaderFiles();
 }

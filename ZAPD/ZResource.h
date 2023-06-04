@@ -31,6 +31,7 @@ enum class ZResourceType
 	AltHeader,
 	Background,
 	Blob,
+	CamData,
 	CollisionHeader,
 	CollisionPoly,
 	Cutscene,

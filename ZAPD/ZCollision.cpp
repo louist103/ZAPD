@@ -96,49 +96,29 @@ void ZCollisionHeader::ParseRawData()
 		// The "guessing algorithm" is basically a "best effort" one and it
 		// is error-prone.
 		// This is based mostly on observation of how CollisionHeader data is
-		// usually ordered. If for some reason the data was in some other funny
-		// order, this would probably break.
-		// The most common ordering is:
-		// - *CamData*
-		// - SurfaceType
-		// - CollisionPoly
-		// - Vertices
-		// - WaterBoxes
-		// - CollisionHeader
-		offset_t upperCameraBoundary = polyTypeDefSegmentOffset;
-		if (upperCameraBoundary == SEGMENTED_NULL)
-		{
-			upperCameraBoundary = polySegmentOffset;
-		}
-		if (upperCameraBoundary == SEGMENTED_NULL)
-		{
-			upperCameraBoundary = vtxSegmentOffset;
-		}
-		if (upperCameraBoundary == SEGMENTED_NULL)
-		{
-			upperCameraBoundary = waterBoxSegmentOffset;
-		}
-		if (upperCameraBoundary == SEGMENTED_NULL)
-		{
-			upperCameraBoundary = rawDataIndex;
-		}
+		// usually ordered.
 
-		// Sharp Ocarina places the CamDataEntries above the list so we need to calculate the number of cameras differently.
-		if (upperCameraBoundary < camDataSegmentOffset)
-		{
-			offset_t offset = camDataSegmentOffset;
-			while (rawData[offset] == 0x00 && rawData[offset + 0x4] == 0x02)
-			{
-				offset += 0x08;
-			}
-			upperCameraBoundary = offset;
+		offset_t upperCameraBoundary;
+		offset_t offset = camDataSegmentOffset;
+		camData = new ZCamData(parent);
+		camData->SetRawDataIndex(camDataSegmentOffset);
+		camData->ParseRawData();
+		printf("XML? %d %08X\n", camData->WasDeclaredInXml(), camDataSegmentOffset);
+		if(!camData->WasDeclaredInXml()) {
+			camData->DeclareReferences(name);
 		}
+		//do
+		///{
+		///	offset += 0x08;
+		///} while (rawData[offset] == 0x00 && rawData[offset + 0x4] == GETSEGNUM(camDataAddress));
+		///upperCameraBoundary = offset;
 
-		camData =
-			new CameraDataList(parent, name, rawData, camDataSegmentOffset, upperCameraBoundary);
+		//camData =
+		//	new CameraDataList(parent, name, rawData, camDataSegmentOffset, upperCameraBoundary);
 	}
 
-	for (int32_t i = 0; i < numWaterBoxes; i++) {
+	for (int32_t i = 0; i < numWaterBoxes; i++)
+	{
 		ZWaterbox waterbox(parent);
 
 		waterbox.SetRawDataIndex(waterBoxSegmentOffset +
@@ -171,6 +151,12 @@ void ZCollisionHeader::DeclareReferences(const std::string& prefix)
 		                            waterBoxes[0].GetSourceTypeName().c_str(),
 		                            StringHelper::Sprintf("%sWaterBoxes", auxName.c_str()),
 		                            waterBoxes.size(), declaration);
+	}
+
+	if ((camData->entries.size() > 0) && (!camData->WasDeclaredInXml())) {
+		declaration.clear();
+		declaration += StringHelper::Sprintf("%s", camData->GetBodySourceCode().c_str());
+		parent->AddDeclarationArray(camData->GetRawDataIndex(), DeclarationAlignment::Align4, camData->GetRawDataSize() /* * camData->entries.size()*/, "CamData", StringHelper::Sprintf("%sCamData", auxName.c_str()),camData->entries.size(), declaration);
 	}
 
 	if (polygons.size() > 0)
@@ -240,7 +226,8 @@ std::string ZCollisionHeader::GetBodySourceCode() const
 	Globals::Instance->GetSegmentedPtrName(vtxAddress, parent, "Vec3s", vtxName);
 
 	if (numVerts > 0)
-		declaration += StringHelper::Sprintf("\tARRAY_COUNT(%s), %s,\n", vtxName.c_str(), vtxName.c_str());
+		declaration +=
+			StringHelper::Sprintf("\tARRAY_COUNT(%s), %s,\n", vtxName.c_str(), vtxName.c_str());
 	else
 		declaration += StringHelper::Sprintf("\t%i, %s,\n", numVerts, vtxName.c_str());
 
@@ -248,7 +235,8 @@ std::string ZCollisionHeader::GetBodySourceCode() const
 	Globals::Instance->GetSegmentedPtrName(polyAddress, parent, "CollisionPoly", polyName);
 
 	if (numPolygons > 0)
-		declaration += StringHelper::Sprintf("\tARRAY_COUNT(%s), %s,\n", polyName.c_str(), polyName.c_str());
+		declaration +=
+			StringHelper::Sprintf("\tARRAY_COUNT(%s), %s,\n", polyName.c_str(), polyName.c_str());
 	else
 		declaration += StringHelper::Sprintf("\t%i, %s,\n", numPolygons, polyName.c_str());
 
@@ -264,7 +252,8 @@ std::string ZCollisionHeader::GetBodySourceCode() const
 	Globals::Instance->GetSegmentedPtrName(waterBoxAddress, parent, "WaterBox", waterBoxName);
 
 	if (numWaterBoxes > 0)
-		declaration += StringHelper::Sprintf("\tARRAY_COUNT(%s), %s\n", waterBoxName.c_str(), waterBoxName.c_str());
+		declaration += StringHelper::Sprintf("\tARRAY_COUNT(%s), %s\n", waterBoxName.c_str(),
+		                                     waterBoxName.c_str());
 	else
 		declaration += StringHelper::Sprintf("\t%i, %s\n", numWaterBoxes, waterBoxName.c_str());
 
@@ -290,7 +279,7 @@ size_t ZCollisionHeader::GetRawDataSize() const
 {
 	return 44;
 }
-
+#if 0
 CameraDataList::CameraDataList(ZFile* parent, const std::string& prefix,
                                const std::vector<uint8_t>& rawData, offset_t rawDataIndex,
                                offset_t upperCameraBoundary)
@@ -328,9 +317,10 @@ CameraDataList::CameraDataList(ZFile* parent, const std::string& prefix,
 			    cameraPosDataSeg > GETSEGOFFSET(entry.cameraPosDataSeg))
 				cameraPosDataSeg = GETSEGOFFSET(entry.cameraPosDataSeg);
 		}
-		else  
+		else
 		{
-			// Sharp Ocarina will place the cam data after the list as opposed to the original maps which have it before.
+			// Sharp Ocarina will place the cam data after the list as opposed to the original maps
+			// which have it before.
 			isSharpOcarina = true;
 			cameraPosDataSeg = rawDataIndex + (numElements * 0x8);
 			if (cameraPosDataSegEnd < GETSEGOFFSET(entry.cameraPosDataSeg))
@@ -349,8 +339,7 @@ CameraDataList::CameraDataList(ZFile* parent, const std::string& prefix,
 		if (entries[i].cameraPosDataSeg != 0)
 		{
 			uint32_t index =
-				(GETSEGOFFSET(entries[i].cameraPosDataSeg) - cameraPosDataOffset) /
-				0x6;
+				(GETSEGOFFSET(entries[i].cameraPosDataSeg) - cameraPosDataOffset) / 0x6;
 			snprintf(camSegLine, 2048, "&%sCamPosData[%i]", prefix.c_str(), index);
 		}
 		else
@@ -363,7 +352,7 @@ CameraDataList::CameraDataList(ZFile* parent, const std::string& prefix,
 		if (i < entries.size() - 1)
 			declaration += "\n";
 	}
-	
+
 	parent->AddDeclarationArray(
 		rawDataIndex, DeclarationAlignment::Align4, entries.size() * 8, "CamData",
 		StringHelper::Sprintf("%sCamDataList", prefix.c_str(), rawDataIndex), entries.size(),
@@ -406,3 +395,4 @@ CameraPositionData::CameraPositionData(const std::vector<uint8_t>& rawData, uint
 	y = BitConverter::ToInt16BE(rawData, rawDataIndex + 2);
 	z = BitConverter::ToInt16BE(rawData, rawDataIndex + 4);
 }
+#endif

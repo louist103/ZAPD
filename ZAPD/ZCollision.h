@@ -4,10 +4,12 @@
 #include "ZFile.h"
 #include "ZResource.h"
 #include "ZRoom/ZRoom.h"
+#include "ZCamData.h"
 #include "ZSurfaceType.h"
 #include "ZVector.h"
 #include "ZWaterbox.h"
 
+#if 0
 class CameraPositionData
 {
 public:
@@ -34,6 +36,7 @@ public:
 	               offset_t rawDataIndex, offset_t upperCameraBoundary);
 	~CameraDataList();
 };
+#endif
 
 class ZCollisionHeader : public ZResource
 {
@@ -57,7 +60,7 @@ public:
 	std::vector<ZCollisionPoly> polygons;
 	std::vector<ZSurfaceType> polygonTypes;
 	std::vector<ZWaterbox> waterBoxes;
-	CameraDataList* camData = nullptr;
+	ZCamData* camData = nullptr;
 
 	ZCollisionHeader(ZFile* nParent);
 	~ZCollisionHeader();
